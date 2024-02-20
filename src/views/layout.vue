@@ -1,17 +1,87 @@
 <template>
 <a-layout class="layout-wrap">
     <a-layout-header class="layout-header">
-        <a-flex justify="space-between">
-            <a-flex justify="flex-start" align="center">
-                <a-button type="text" v-show="!vdatas.desktopIsPc" @click="vdatas.siderCollsped=!vdatas.siderCollsped" >
-                    <Icon icon="carbon:menu" />
-                </a-button>
-                <div class="layout-header-logo">
-                    <img src="/logo.png" height="60px"/>
-                </div>
-            </a-flex>
+        <a-flex justify="space-between" align="center">
+            <a-button  v-show="!vdatas.desktopIsPc" @click="vdatas.siderCollsped=!vdatas.siderCollsped" >
+                <Icon icon="carbon:menu" class="icon-16" />
+            </a-button>
+            <div class="layout-header-logo">
+                <img src="/logo.png" height="48px"/>
+            </div>
             <div class="layout-header-actions">
-                <a-button @click="vfuncs.logout" type="text">退出</a-button>
+                <template v-if="vdatas.desktopIsPc">
+                    <a-space>
+                        <a-dropdown arrow>
+                            <a href="javascript:;">
+                                <a-space>
+                                        <a-avatar :size="24">
+                                            <template #icon>
+                                                <img src="/avatar2.png" />
+                                            </template>
+                                        </a-avatar>
+                                        <span>                                    
+                                            {{vdatas.realname}}
+                                            <Icon icon="mingcute:down-fill" />
+                                        </span>
+                                </a-space>
+                            </a>
+                            <template #overlay>
+                                <a-menu>
+                                    <a-menu-item key="1" @click="vdatas.drawer_show=true;">
+                                        <a-space>
+                                            <Icon icon="uil:setting" />
+                                            修改密码
+                                        </a-space>
+                                    </a-menu-item>
+                                    <a-menu-item key="2" @click="vfuncs.logout">
+                                        <a-space>
+                                            <Icon icon="ci:exit" />
+                                            退出登录
+                                        </a-space>
+                                    </a-menu-item>
+                                </a-menu>
+                            </template>
+                        </a-dropdown>
+                    </a-space>
+                </template>
+                <template v-else>
+                    <a-space>
+                        <a-dropdown arrow>
+                            <a-button>
+                                <Icon icon="ri:more-fill" />
+                            </a-button>
+                            <template #overlay>
+                                <a-menu>
+                                    <a-menu-item key="0">
+                                        <a-space>
+                                            <a-avatar :size="24">
+                                                <template #icon>
+                                                    <img src="/avatar2.png" />
+                                                </template>
+                                            </a-avatar>
+                                            <span>
+                                                {{vdatas.realname}}
+                                            </span>
+                                        </a-space>
+                                    </a-menu-item>
+                                    <a-menu-divider />
+                                    <a-menu-item key="1" @click="vdatas.drawer_show=true;">
+                                        <a-space>
+                                            <Icon icon="uil:setting" />
+                                            修改密码
+                                        </a-space>
+                                    </a-menu-item>
+                                    <a-menu-item key="2" @click="vfuncs.logout">
+                                        <a-space>
+                                            <Icon icon="ci:exit" />
+                                            退出登录
+                                        </a-space>
+                                    </a-menu-item>
+                                </a-menu>
+                            </template>
+                        </a-dropdown>
+                    </a-space>
+                </template>
             </div>
         </a-flex>
     </a-layout-header>
@@ -25,15 +95,15 @@
             @breakpoint="vfuncs.siderBreakpoint"
         >
             <c-scrollbar height="100%">
-                <a-menu mode="inline" @select="vfuncs.siderMemuChange" v-model:selectedKeys="vdatas.menuInitSelected" v-model:openKeys="vdatas.menuInitOpened">
-                    <div v-for="(menu,idx) of vdatas.menus" :key="menu.key">
-                        <a-sub-menu v-bind:key="menu.key" :title="menu.title">
-                            <template #icon><Icon icon="ion:list" /></template>
-                            <div v-for="(submenu,subidx) of menu.children" :key="submenu.key">
-                                <a-menu-item v-bind:key="submenu.key" :title="submenu.title">{{submenu.title}}</a-menu-item>
-                            </div>
-                        </a-sub-menu>
-                    </div>
+                <a-menu mode="inline"  v-model:selectedKeys="vdatas.menuInitSelected" v-model:openKeys="vdatas.menuInitOpened">
+                    <a-sub-menu v-for="(menu,idx) of vdatas.menus" v-bind:key="menu.key" :title="menu.title">
+                        <template #icon>
+                            <Icon icon="ion:list" />
+                        </template>
+                        <a-menu-item v-for="(submenu,subidx) of menu.children" v-bind:key="submenu.key" :title="submenu.title" @click="vfuncs.siderMemuChange(submenu)">
+                            {{submenu.title}}
+                        </a-menu-item>
+                    </a-sub-menu>
                 </a-menu>
             </c-scrollbar>
         </a-layout-sider>
@@ -56,11 +126,41 @@
         </a-layout>
     </a-layout>
 </a-layout>
+
+<a-drawer v-model:open="vdatas.drawer_show" title="修改密码" placement="right" :maskClosable="false" :width="vdatas.draw_width">
+    <a-form :model="vdatas.change_pwd" autocomplete="off" @finish="vfuncs.post_change_pwd" hideRequiredMark :label-col="{span:5}">
+        <a-form-item label="用户名">
+            {{auth.data.username}}
+        </a-form-item>
+        <a-form-item label="真实姓名">
+            {{auth.data.realname}}
+        </a-form-item>
+        
+        <a-form-item label="重置新密码" name="password" :rules="[{required:true,message:''}]">
+            <a-input-password v-model:value="vdatas.change_pwd.password"></a-input-password>
+        </a-form-item>
+
+        <a-form-item label="确认新密码" name="repassword" :rules="[{required:true,message:''}]">
+            <a-input-password v-model:value="vdatas.change_pwd.repassword"></a-input-password>
+        </a-form-item>
+
+        <a-form-item name="userid" :wrapper-col="{offset:5 }">
+            <a-input v-model:value="vdatas.change_pwd.userid" type="hidden"></a-input>
+            <a-space>
+                <a-button type="primary" html-type="submit">确定</a-button>
+                <a-button html-type="button" @click="vdatas.drawer_show=false">取消</a-button>
+            </a-space>
+        </a-form-item>
+    </a-form>
+</a-drawer>
+
 </template>
 
 
 <script setup>
+import {util} from '@/gcore';
 import{useAuthStore} from '@/stores'
+
 onMounted(()=>{
     vfuncs.changeContentHeaderTitle()
 })
@@ -68,6 +168,7 @@ const auth = useAuthStore();
 const router = useRouter();
 
 const vdatas = reactive({
+    realname:auth.data.realname,
     desktopIsPc:true,
     siderCollsped:false,
     siderCollapseWidth:48,
@@ -75,11 +176,15 @@ const vdatas = reactive({
     menuInitSelected:[],
     menuInitOpened:[],
     breadcrumbs:[],
+    drawer_show:false,
+    draw_width:util.fwidth(580),
+    change_pwd:{
+        userid:auth.data.userid,
+    },
 })
 const vfuncs = {
-    siderBreakpoint: (isXl)=>{
-        console.log('isXl',isXl)
-        if(isXl){
+    siderBreakpoint: (lessXl)=>{
+        if(lessXl){
             vdatas.desktopIsPc = false
             vdatas.siderCollapseWidth = 0;
             vdatas.siderCollsped=true;
@@ -98,9 +203,9 @@ const vfuncs = {
         if(!vdatas.desktopIsPc){
             vdatas.siderCollsped=true;
         }
-        if(typeof(menu.item.path)!='undefined' && menu.item.path){
-            router.push(menu.item.path);
-            vfuncs.changeContentHeaderTitle(menu.item.path);
+        if(typeof(menu.path)!='undefined' && menu.path){
+            router.push(menu.path);
+            vfuncs.changeContentHeaderTitle(menu.path);
         }
     },
     changeContentHeaderTitle:(path)=>{
@@ -122,6 +227,9 @@ const vfuncs = {
                 break;
             }
         }
+    },
+    post_change_pwd:(values)=>{
+        console.log(values);
     },
     logout:()=>{
         auth.quit();

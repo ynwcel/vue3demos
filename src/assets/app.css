@@ -8,22 +8,11 @@ html {font-size: 13px}
     --var-border2-color: #e0e0e0;
     --var-layout-hader-height: 60px
 }
-
-span.i-icon svg {
-    font-size: 1.2rem;
-    display: inline-block;
-    position: relative;
-    top: 0.2rem;
-    margin-right: 0.1rem;
-}
-
-.ant-btn-sm span.i-icon svg {
-    font-size: 1.1rem;
-    display: inline-block;
-    position: relative;
-    top: 0.2rem;
-    margin-right: 0.1rem;
-}
+svg.iconify{font-size: 16px;position: relative;top:0.2rem}
+svg.icon-15 {font-size: 15px;position: relative;top:0.25rem;}
+svg.icon-16 {font-size: 16px;position: relative;top:0.2rem;}
+svg.icon-17 {font-size: 17px;position: relative;top:0.15rem;}
+svg.icon-18 {font-size: 18px;position: relative;top:0.05rem;}
 
 /****### Login.vue #### ****************/
 .login-wrap {
@@ -138,13 +127,11 @@ span.i-icon svg {
 .ant-layout-header.layout-header div.layout-header-logo {
     height: var(--var-layout-hader-height);
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
 }
 
-@media only screen and (max-width:767px) {
-    .ant-layout-header.layout-header div.layout-header-logo {
-        width: 68px;
-    }
-}
 
 .ant-layout.layout-body {
     width: 100vw;
