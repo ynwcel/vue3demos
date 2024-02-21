@@ -2,8 +2,8 @@
 <a-layout class="layout-wrap">
     <a-layout-header class="layout-header">
         <a-flex justify="space-between" align="center">
-            <a-button  v-show="!vdatas.desktopIsPc" @click="vdatas.siderCollsped=!vdatas.siderCollsped" >
-                <Icon icon="carbon:menu" class="icon-16" />
+            <a-button type="text"  v-show="!vdatas.desktopIsPc" @click="vdatas.siderCollsped=!vdatas.siderCollsped" >
+                <Icon icon="carbon:menu" class="icon-18" />
             </a-button>
             <div class="layout-header-logo">
                 <img src="/logo.png" height="48px"/>
@@ -19,7 +19,7 @@
                                                 <img src="/avatar2.png" />
                                             </template>
                                         </a-avatar>
-                                        <span>                                    
+                                        <span>
                                             {{vdatas.realname}}
                                             <Icon icon="mingcute:down-fill" />
                                         </span>
@@ -45,26 +45,20 @@
                     </a-space>
                 </template>
                 <template v-else>
-                    <a-space>
-                        <a-dropdown arrow>
-                            <a-button>
-                                <Icon icon="ri:more-fill" />
-                            </a-button>
-                            <template #overlay>
-                                <a-menu>
-                                    <a-menu-item key="0">
-                                        <a-space>
-                                            <a-avatar :size="24">
-                                                <template #icon>
-                                                    <img src="/avatar2.png" />
-                                                </template>
-                                            </a-avatar>
-                                            <span>
-                                                {{vdatas.realname}}
-                                            </span>
-                                        </a-space>
-                                    </a-menu-item>
-                                    <a-menu-divider />
+                    <a-dropdown arrow>
+                        <a-button type="text">
+                            <Icon icon="ri:more-fill" />
+                        </a-button>
+                        <template #overlay>
+                            <a-menu>
+                                <a-sub-menu :title="vdatas.realname" :key="10001">
+                                    <template #icon>
+                                        <a-avatar :size="24">
+                                            <template #icon>
+                                                <img src="/avatar2.png" />
+                                            </template>
+                                        </a-avatar>
+                                    </template>
                                     <a-menu-item key="1" @click="vdatas.drawer_show=true;">
                                         <a-space>
                                             <Icon icon="uil:setting" />
@@ -77,10 +71,10 @@
                                             退出登录
                                         </a-space>
                                     </a-menu-item>
-                                </a-menu>
-                            </template>
-                        </a-dropdown>
-                    </a-space>
+                                </a-sub-menu>
+                            </a-menu>
+                        </template>
+                    </a-dropdown>
                 </template>
             </div>
         </a-flex>
