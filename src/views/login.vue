@@ -76,7 +76,7 @@ let vfuncs = {
     refresh:async()=>{
         let result = await api.getCaptcha();
         if(result.data){
-            vdatas.pic_data = result.data.captcha_pic
+            vdatas.captcha = result.data.captcha_pic
             vdatas.login.captcha_id = result.data.captcha_id
         }
     }
