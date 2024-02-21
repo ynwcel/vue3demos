@@ -21,8 +21,8 @@
                     </a-form-item>
 
                     
-                    <a-form-item name="captcha" :rules="[{ required: true,message:''}]" class="login-form-captcha">
-                        <a-input v-model:value="vdatas.login.captcha" placeholder="验证码" size="large">
+                    <a-form-item name="captcha_val" :rules="[{ required: true,message:''}]" class="login-form-captcha">
+                        <a-input v-model:value="vdatas.login.captcha_val" placeholder="验证码" size="large">
                             <template #prefix><Icon icon="icon-park-solid:check-one" /></template>
                             <template #addonAfter>
                                 <img :src="vdatas.captcha" style="height:35px" @click="vfuncs.refresh" />
@@ -55,22 +55,25 @@ let router = useRouter();
 let vdatas = reactive({
     login:{
     },
-    captcha:'/captcha.jpg',
+    captcha:'#',
     spinning:false,
 })
 let vfuncs = {
     loginSubmit:async(values) => {
         vdatas.spinning = true;
-        let result = await api.login(values);
+        let params = Object.assign(vdatas.login,values);
+        let result = await api.login(params);
         if(result.flag){
             auth.apply(result.data);
             let routers = auth.getRouters();
+            console.log(routers);
             for(let r in routers){
                 router.addRoute('layout',routers[r]);
             }
             let next = routers.shift();
             router.push(next.path);
         }
+        vfuncs.refresh();
         vdatas.spinning = false;
     },
     refresh:async()=>{
@@ -81,4 +84,9 @@ let vfuncs = {
         }
     }
 }
+
+onMounted(()=>{
+    vfuncs.refresh();
+})
+
 </script>
