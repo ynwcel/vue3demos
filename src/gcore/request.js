@@ -3,10 +3,12 @@ import { useAuthStore } from '@/stores';
 import NProgress from "nprogress";
 
 let auth = useAuthStore();
+let API_URL = import.meta.env.VITE_API_URL.replace(/\/+$/,'');
+
 
 export const request = {
     format: (url) => {
-        return 'http://127.0.0.1:8000/api/' + url.replace(/^\//, '')
+        return API_URL + url.replace(/^\/+/, '')
     },
     send: async (method, url, values, is_json = true) => {
         NProgress.start();
