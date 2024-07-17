@@ -1,6 +1,6 @@
 <template>
     <a-table 
-        bordered="1"
+        bordered
         :columns="columns" 
         :dataSource="props.rows"
         :row-selection="props.selection"

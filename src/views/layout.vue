@@ -89,14 +89,18 @@
             @breakpoint="vfuncs.siderBreakpoint"
         >
         <a-flex vertical>
-            <div style="height:50px;display: flex;width: 100%;flex-direction: row;justify-content: center;align-items: center;">
+            <div class="layout-body-sider-search">
                 <a-form layout="inline">
-                    <a-form-item>
-                        <a-input placeholder="菜单查询">
-                            <template #prefix>
-                                <Icon icon="ant-design:search-outlined" />
+                    <a-form-item @click="vfuncs.siderSearchFocus()">
+                        <a-auto-complete  :style="{width: vdatas.siderCollsped ? '34px':'200px'}"  :options="vdatas.menuSearchOptions" v-model:value="vdatas.menuSearchSelect" @search="vfuncs.searchMenu" @select="vfuncs.selectSearchMenu">
+                            <template #default>
+                                <a-input ref="sider_search_menu_input" placeholder="菜单过滤" :style="{'padding-left': '0.5rem' }">
+                                    <template #prefix>
+                                        <Icon icon="ant-design:search-outlined"/>
+                                    </template>
+                                </a-input>
                             </template>
-                        </a-input>
+                        </a-auto-complete>
                     </a-form-item>
                 </a-form>
 
@@ -170,12 +174,14 @@
 <script setup>
 import {util} from '@/helper';
 import{useAuthStore} from '@/stores'
+import { ref } from 'vue';
 
 onMounted(()=>{
     vfuncs.changeContentHeaderTitle()
 })
 const auth = useAuthStore();
 const router = useRouter();
+const sider_search_menu_input = ref();
 
 const vdatas = reactive({
     realname:auth.data.realname,
@@ -185,6 +191,8 @@ const vdatas = reactive({
     menus:auth.buildMenus(),
     menuInitSelected:[],
     menuInitOpened:[],
+    menuSearchOptions:[],
+    menuSearchSelect:"",
     breadcrumbs:[],
     drawer_show:false,
     draw_width:util.fwidth(580),
@@ -208,6 +216,42 @@ const vfuncs = {
         if(vdatas.desktopIsPc && type == 'clickTrigger'){
             vdatas.siderCollsped=!vdatas.siderCollsped;
         }
+    },
+    siderSearchFocus:(event)=>{
+        vdatas.siderCollsped=false;
+        sider_search_menu_input.value.focus();
+    },
+    searchMenu:(val)=>{
+        let options = [];
+        for(let parent of vdatas.menus){
+            for(let submenu of parent.children){
+                if(submenu.title.indexOf(val)>=0){
+                    options.push({
+                        value:submenu.key,
+                        label:submenu.title,
+                    })
+                }
+            }
+        }
+        vdatas.menuSearchOptions = options;
+    },
+    selectSearchMenu:(select_key)=>{
+        let find_menu = null;
+        for (let parent of vdatas.menus) {
+            let find = false;
+            for (let submenu of parent.children) {
+                if(submenu.key == select_key){
+                    find_menu = submenu;
+                    find = true;
+                    break;
+                }
+            }
+            if(find){
+                break;
+            }
+        }
+        vdatas.menuSearchSelect = find_menu.title;
+        vfuncs.siderMemuChange(find_menu);
     },
     siderMemuChange: (menu)=>{
         if(!vdatas.desktopIsPc){
