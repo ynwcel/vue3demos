@@ -1,5 +1,5 @@
 * {margin: 0;padding: 0;box-sizing: border-box;border-radius: 0;}
-html {font-size: 13px}
+html {font-size: 14px}
 
 :root {
     --var-bg-color: #fff;
@@ -8,15 +8,19 @@ html {font-size: 13px}
     --var-border2-color: #e0e0e0;
     --var-layout-hader-height: 60px
 }
-svg.iconify{font-size: 16px;position: relative;top:0.2rem}
-svg.icon-15 {font-size: 15px;position: relative;top:0.25rem;}
-svg.icon-16 {font-size: 16px;position: relative;top:0.2rem;}
-svg.icon-17 {font-size: 17px;position: relative;top:0.15rem;}
-svg.icon-18 {font-size: 18px;position: relative;top:0.05rem;}
+svg.iconify{font-size: 1.2rem;}
+svg.iconify.icon-14{font-size: 1.4rem;}
+svg.iconify.icon-15 {font-size: 1.5rem;}
+svg.iconify.icon-16 {font-size: 1.6rem;}
+svg.iconify.icon-17 {font-size: 1.7rem;}
+svg.iconify.icon-18 {font-size: 1.8rem;}
+button.ant-btn svg.iconify{position: relative;top:0.2rem;margin-right:0.1rem;}
+body{padding: 0;margin: 0;width: 100vw;height: 100vh;overflow: hidden;}
+#app{overflow: hidden;width: 100vw;height: 100vh;}
 
 /****### Login.vue #### ****************/
 .login-wrap {
-    background: url(/loginbg.png) left top no-repeat;
+    background: url(./loginbg.png) left top no-repeat;
     background-size: cover;
     width: 100vw;
     height: 100vh;
@@ -27,7 +31,7 @@ svg.icon-18 {font-size: 18px;position: relative;top:0.05rem;}
 }
 
 .login-wrap .login {
-    width: 50rem;
+    width: 25vw;
     background: var(--var-bg-color);
     display: flex;
     flex-direction: column;
@@ -191,7 +195,8 @@ svg.icon-18 {font-size: 18px;position: relative;top:0.05rem;}
 }
 
 .ant-layout.layout-body-main .c-scrollbar {
-    height: calc(100vh - var(--var-layout-hader-height));
+    height: calc(100vh - var(--var-layout-hader-height) - var(--var-layout-hader-height));
+    padding: 0.5rem;
 }
 
 .ant-layout.layout-body-main .ant-card.layout-body-main-header {
@@ -215,11 +220,6 @@ svg.icon-18 {font-size: 18px;position: relative;top:0.05rem;}
 .ant-layout.layout-body-main .ant-card.layout-body-main-header .ant-card-body .ant-breadcrumb b {
     font-size: 22px;
     font-weight: bold;
-}
-
-.ant-layout.layout-body-main .c-scrollbar {
-    height: calc(100vh - var(--var-layout-hader-height) - var(--var-layout-hader-height));
-    padding: 1rem;
 }
 
 
@@ -253,5 +253,8 @@ svg.icon-18 {font-size: 18px;position: relative;top:0.05rem;}
     .card-filter-block form.ant-form-inline div.ant-form-item div.ant-form-row div.ant-form-item-control {
         width: auto;
         flex: 0 0 auto;
+    }
+    div.vcard-wrap div.ant-card-body{
+        padding:1rem 0.8rem;
     }
 }

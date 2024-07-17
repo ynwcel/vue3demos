@@ -3,10 +3,10 @@
     <a-layout-header class="layout-header">
         <a-flex justify="space-between" align="center">
             <a-button type="text"  v-show="!vdatas.desktopIsPc" @click="vdatas.siderCollsped=!vdatas.siderCollsped" >
-                <Icon icon="carbon:menu" class="icon-18" />
+                <Icon icon="carbon:menu" class="icon-14" />
             </a-button>
             <div class="layout-header-logo">
-                <img src="/logo.png" height="48px"/>
+                <img src="@/assets/logo.png" height="48px"/>
             </div>
             <div class="layout-header-actions">
                 <template v-if="vdatas.desktopIsPc">
@@ -16,7 +16,7 @@
                                 <a-space>
                                         <a-avatar :size="24">
                                             <template #icon>
-                                                <img src="/avatar2.png" />
+                                                <img src="@/assets/avatar2.png" />
                                             </template>
                                         </a-avatar>
                                         <span>
@@ -47,7 +47,7 @@
                 <template v-else>
                     <a-dropdown arrow>
                         <a-button type="text">
-                            <Icon icon="ri:more-fill" />
+                            <Icon icon="ri:more-fill"/>
                         </a-button>
                         <template #overlay>
                             <a-menu>
@@ -55,7 +55,7 @@
                                     <template #icon>
                                         <a-avatar :size="24">
                                             <template #icon>
-                                                <img src="/avatar2.png" />
+                                                <img src="@/assets/avatar2.png" />
                                             </template>
                                         </a-avatar>
                                     </template>
@@ -88,18 +88,34 @@
             breakpoint="xl" 
             @breakpoint="vfuncs.siderBreakpoint"
         >
-            <c-scrollbar height="100%">
-                <a-menu mode="inline"  v-model:selectedKeys="vdatas.menuInitSelected" v-model:openKeys="vdatas.menuInitOpened">
-                    <a-sub-menu v-for="(menu,idx) of vdatas.menus" v-bind:key="menu.key" :title="menu.title">
-                        <template #icon>
-                            <Icon icon="ion:list" />
-                        </template>
-                        <a-menu-item v-for="(submenu,subidx) of menu.children" v-bind:key="submenu.key" :title="submenu.title" @click="vfuncs.siderMemuChange(submenu)">
-                            {{submenu.title}}
-                        </a-menu-item>
-                    </a-sub-menu>
-                </a-menu>
-            </c-scrollbar>
+        <a-flex vertical>
+            <div style="height:50px;display: flex;width: 100%;flex-direction: row;justify-content: center;align-items: center;">
+                <a-form layout="inline">
+                    <a-form-item>
+                        <a-input placeholder="菜单查询">
+                            <template #prefix>
+                                <Icon icon="ant-design:search-outlined" />
+                            </template>
+                        </a-input>
+                    </a-form-item>
+                </a-form>
+
+            </div>
+            <div style="height: calc( 100% - 50px);">
+                <c-scrollbar height="100%">
+                    <a-menu mode="inline"  v-model:selectedKeys="vdatas.menuInitSelected" v-model:openKeys="vdatas.menuInitOpened">
+                        <a-sub-menu v-for="(menu,idx) of vdatas.menus" v-bind:key="menu.key" :title="menu.title">
+                            <template #icon>
+                                <Icon icon="ion:list" class="icon-15" />
+                            </template>
+                            <a-menu-item v-for="(submenu,subidx) of menu.children" v-bind:key="submenu.key" :title="submenu.title" @click="vfuncs.siderMemuChange(submenu)">
+                                {{submenu.title}}
+                            </a-menu-item>
+                        </a-sub-menu>
+                    </a-menu>
+                </c-scrollbar>
+            </div>
+        </a-flex>
         </a-layout-sider>
         <a-layout class="layout-body-main">
             <div class="layout-body-main-cover" @click="vdatas.siderCollsped=!vdatas.siderCollsped"  v-show="!vdatas.desktopIsPc && !vdatas.siderCollsped"></div>
@@ -152,7 +168,7 @@
 
 
 <script setup>
-import {util} from '@/gcore';
+import {util} from '@/helper';
 import{useAuthStore} from '@/stores'
 
 onMounted(()=>{

@@ -26,7 +26,7 @@ export const useAuthStore = defineStore('auth', () => {
         for (let idx in data.actions) {
             let item = data.actions[idx];
             if (item.pid > 0) {
-                let item_path = `/${item.view.replace(/\.vue$/, '').replace(/^\//, '')}`;
+                let item_path = `/${item.href.replace(/\.vue$/, '').replace(/^\//, '')}`;
                 let item_view = `/src/views/${item.view.replace(/^\//, '')}`;
                 let item_route = {
                     path: item_path,
@@ -62,7 +62,7 @@ export const useAuthStore = defineStore('auth', () => {
                     key: m.key + (rr + 1),
                     title: vv.title,
                     label: vv.title,
-                    path: '/' + vv.view.replace(/\.vue$/, '').replace(/^\//, ''),
+                    path: '/' + vv.href.replace(/\.vue$/, '').replace(/^\//, ''),
                 })
             }
             menus.push(m);
