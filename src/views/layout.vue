@@ -250,7 +250,7 @@ const vfuncs = {
                 break;
             }
         }
-        vdatas.menuSearchSelect = find_menu.title;
+        vdatas.menuSearchSelect = "";
         vfuncs.siderMemuChange(find_menu);
     },
     siderMemuChange: (menu)=>{

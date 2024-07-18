@@ -182,7 +182,7 @@ body{padding: 0;margin: 0;width: 100vw;height: 100vh;overflow: hidden;}
 @media only screen and (max-width:1199px) {
     .ant-layout-sider.layout-body-sider {
         position: fixed;
-        z-index: 9999999;
+        z-index: 999;
         height: calc(100vh - var(--var-layout-hader-height));
     }
 }
@@ -199,7 +199,7 @@ body{padding: 0;margin: 0;width: 100vw;height: 100vh;overflow: hidden;}
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 9999;
+    z-index: 990;
     background-color: rgba(0, 0, 0, 0.5)
 }
 
