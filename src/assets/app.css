@@ -6,7 +6,7 @@ html {font-size: 14px}
     --var-bg2-color: #fefefe;
     --var-border-color: #f0f0f0;
     --var-border2-color: #e0e0e0;
-    --var-layout-hader-height: 60px
+    --var-layout-header-height: 60px
 }
 svg.iconify{font-size: 1.2rem;}
 svg.iconify.icon-14{font-size: 1.4rem;}
@@ -121,15 +121,15 @@ body{padding: 0;margin: 0;width: 100vw;height: 100vh;overflow: hidden;}
 .ant-layout-header.layout-header {
     background-color: var(--var-bg-color);
     border-bottom: 1px solid var(--var-border-color);
-    height: var(--var-layout-hader-height);
-    line-height: var(--var-layout-hader-height);
+    height: var(--var-layout-header-height);
+    line-height: var(--var-layout-header-height);
     overflow: hidden;
     padding: 0 1rem;
     border-radius: none;
 }
 
 .ant-layout-header.layout-header div.layout-header-logo {
-    height: var(--var-layout-hader-height);
+    height: var(--var-layout-header-height);
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -139,7 +139,7 @@ body{padding: 0;margin: 0;width: 100vw;height: 100vh;overflow: hidden;}
 
 .ant-layout.layout-body {
     width: 100vw;
-    height: calc(100vh - var(--var-layout-hader-height));
+    height: calc(100vh - var(--var-layout-header-height));
     background-color: var(--var-bg-color);
     overflow: hidden;
 }
@@ -165,7 +165,7 @@ body{padding: 0;margin: 0;width: 100vw;height: 100vh;overflow: hidden;}
 }
 
 .ant-layout-sider.layout-body-sider .c-scrollbar {
-    height: calc(100vh - var(--var-layout-hader-height));
+    height: calc(100vh - var(--var-layout-header-height));
 }
 
 .ant-layout-sider.layout-body-sider .ant-menu {
@@ -183,14 +183,14 @@ body{padding: 0;margin: 0;width: 100vw;height: 100vh;overflow: hidden;}
     .ant-layout-sider.layout-body-sider {
         position: fixed;
         z-index: 999;
-        height: calc(100vh - var(--var-layout-hader-height));
+        height: calc(100vh - var(--var-layout-header-height));
     }
 }
 
 .ant-layout.layout-body-main {
     position: relative;
     width: auto;
-    height: calc(100vh - var(--var-layout-hader-height));
+    height: calc(100vh - var(--var-layout-header-height));
 }
 
 .layout-body-main-cover {
@@ -204,7 +204,7 @@ body{padding: 0;margin: 0;width: 100vw;height: 100vh;overflow: hidden;}
 }
 
 .ant-layout.layout-body-main .c-scrollbar {
-    height: calc(100vh - var(--var-layout-hader-height) - var(--var-layout-hader-height));
+    height: calc(100vh - var(--var-layout-header-height) - var(--var-layout-header-height));
     padding: 0.5rem;
 }
 

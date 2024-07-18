@@ -26,8 +26,9 @@ router.beforeEach((to, from) => {
         for (let i in dynamicRoutes) {
             router.addRoute('layout', dynamicRoutes[i]);
             let dynamic_router_path = dynamicRoutes[i].path.split(/\?/)[0];
-            if (to.path.toLowerCase() == dynamic_router_path) {
+            if (to.path.toLowerCase() == dynamic_router_path.toLowerCase()) {
                 find = true;
+                break;
             }
         }
         if (find) {

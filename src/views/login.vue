@@ -67,11 +67,10 @@ let vfuncs = {
         if(result.flag){
             auth.apply(result.data);
             let routers = auth.getRouters();
-            console.log(routers);
             for(let r in routers){
                 router.addRoute('layout',routers[r]);
             }
-            let next = routers.shift();
+            let next = routers[0];
             router.push(next.path);
         }
         vfuncs.refresh();

@@ -88,7 +88,7 @@
             breakpoint="xl" 
             @breakpoint="vfuncs.siderBreakpoint"
         >
-        <a-flex vertical>
+        <a-flex vertical style="height:100%;">
             <div class="layout-body-sider-search">
                 <a-form layout="inline">
                     <a-form-item @click="vfuncs.siderSearchFocus()">
@@ -103,9 +103,8 @@
                         </a-auto-complete>
                     </a-form-item>
                 </a-form>
-
             </div>
-            <div style="height: calc( 100% - 50px);">
+            <div style="height:calc( 100% - 50px);">
                 <c-scrollbar height="100%">
                     <a-menu mode="inline"  v-model:selectedKeys="vdatas.menuInitSelected" v-model:openKeys="vdatas.menuInitOpened">
                         <a-sub-menu v-for="(menu,idx) of vdatas.menus" v-bind:key="menu.key" :title="menu.title">
