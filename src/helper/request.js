@@ -3,7 +3,7 @@ import { useAuthStore } from '@/stores';
 import NProgress from "nprogress";
 
 let auth = useAuthStore();
-let API_URL = import.meta.env.VITE_API_URL.replace(/\/+$/,'');
+let API_URL = import.meta.env.VITE_API_URL?.replace(/\/+$/,'');
 
 
 export const request = {
