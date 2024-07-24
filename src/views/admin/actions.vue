@@ -16,7 +16,7 @@
                     <template v-if="column.dataIndex == 'typeid'">
                         <a-space>
                             <template v-if="record.typeid == 1">
-                                <a-tag color="green">菜单</a-tag>
+                                <a-tag color="green">功能菜单</a-tag>
                             </template>
                             <template v-else>
                                 <a-tag color="orange">接口地址</a-tag>
@@ -54,6 +54,7 @@
                 </template>
             </vtable>
         </template>
+
         <template #drawer>
             <a-spin :spinning="vdatas.draw_sping">
                 <a-form :model="vdatas.edit" autocomplete="off" @finish="vfuncs.post">
@@ -80,6 +81,12 @@
                         <a-input v-model:value="vdatas.edit.view"></a-input>
                     </a-form-item>
 
+                    <a-form-item label="菜单类型" name="typeid" :rules="[{ required: true, message: '' }]">
+                        <a-select v-model:value="vdatas.edit.typeid">
+                            <a-select-option :value="1">功能菜单</a-select-option>
+                            <a-select-option :value="2">接口地址</a-select-option>
+                        </a-select>
+                    </a-form-item>
 
                     <a-form-item label="菜单状态" name="is_show" :rules="[{ required: true, message: '' }]">
                         <a-select v-model:value="vdatas.edit.is_show">
@@ -115,6 +122,7 @@ let vdatas = reactive({
         title: '',
         view:"",
         href: '',
+        typeid:1,
         is_show: 1,
         orders: 1000000,
     },
@@ -161,6 +169,7 @@ let vfuncs = {
             pid: 0,
             title: '',
             href: '',
+            typeid: 1,
             is_show: 1,
             orders: 1000000,
         }
