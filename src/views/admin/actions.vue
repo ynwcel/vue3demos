@@ -209,19 +209,16 @@ let vfuncs = {
     searchEditPid: (input, option) => {
         return option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0;
     },
-    rows2tree:(data,pid_key="pid")=>{
+    rows2tree:(data, pid_val = 0, pid_key="pid",id_key="id")=>{
         let result = new Array();
         for(let i=0;i<data.length;i++){
             let row = data[i];
-            if(row[pid_key]!=0){
+            if(row[pid_key]!= pid_val){
                 continue;
             }
-            row.children = [];
-            for(let j=0;j<data.length;j++){
-                let row_j = data[j];
-                if(row.id == row_j[pid_key]){
-                    row.children.push(row_j);
-                }
+            let children = vfuncs.rows2tree(data, row[id_key], pid_key, id_key);
+            if(children.length>0){
+                row.children = children
             }
             result.push(row);
         }

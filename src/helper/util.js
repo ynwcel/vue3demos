@@ -38,11 +38,6 @@ export const util = {
         }
         return width;
     },
-    array:{
-        toMap:(values,key_name,val_name=undefined)=>{
-            
-        }
-    },
     msg: {
         fail: (text) => {
             message.error(text);
@@ -51,11 +46,11 @@ export const util = {
             message.success(text);
         },
         show: (values) => {
-            if (typeof (values.msg) != 'undefined' && typeof (values.flag) != 'undefined'){
+            if (typeof (values.message) != 'undefined' && typeof (values.flag) != 'undefined'){
                 if(values.flag) {
-                    return msg.ok(values.msg || '操作成功');
+                    return util.msg.ok(values.message || '操作成功');
                 } else {
-                    return msg.fail(values.msg || '操作失败，请重试');
+                    return util.msg.fail(values.message || '操作失败，请重试');
                 }
             }
         }

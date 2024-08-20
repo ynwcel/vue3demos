@@ -1,5 +1,6 @@
 import { util } from './util';
 import { useAuthStore } from '@/stores';
+import { router } from '@/router';
 import NProgress from "nprogress";
 
 let auth = useAuthStore();
@@ -8,25 +9,26 @@ let API_URL = import.meta.env.VITE_API_URL?.replace(/\/+$/,'');
 
 export const request = {
     format: (url) => {
-        return API_URL + url.replace(/^\/+/, '')
+        return API_URL + "/" + url.replace(/^\/+/, '')
     },
-    send: async (method, url, values, is_json = true) => {
+    send: async (method, url, values, is_json = true,options={}) => {
         NProgress.start();
         let furl = request.format(url);
-        let options = {
+        let fopts = {
             'method': method,
             'headers': {
-                'Auth-Token': auth.data.auth_token,
+                'Auth-Token': auth.data.authtoken,
             },
         }
         if (is_json) {
-            options.headers['Content-Type'] = 'application/json;charset=utf-8';
+            fopts.headers['Content-Type'] = 'application/json;charset=utf-8';
         }
         if (typeof (values) != 'undefined' && values) {
-            options.body = is_json ? JSON.stringify(values) : values;
+            fopts.body = is_json ? JSON.stringify(values) : values;
         }
+        fopts = Object.assign(fopts, options);
         try {
-            let response = await fetch(furl, options)
+            let response = await fetch(furl, fopts)
             let json = await response.json();
             if (!json.flag) {
                 util.msg.fail(json.msg)
@@ -60,5 +62,11 @@ export const request = {
             util.msg.ok('操作成功');
         }
         return result;
+    },
+    upload: async function (url, datas) {
+        let options = {
+            body: datas,
+        }
+        return await request.send('post',url, {},false,options);
     },
 }
