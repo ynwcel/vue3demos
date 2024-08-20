@@ -54,8 +54,8 @@ let router = useRouter();
 
 let vdatas = reactive({
     login:{
+        captcha_id: '',
     },
-    captcha_id:'',
     captcha_pic:'#',
     spinning:false,
 })
@@ -77,10 +77,10 @@ let vfuncs = {
         vdatas.spinning = false;
     },
     refresh:async()=>{
-        let result = await api.login.getCaptcha(vdatas.captcha_id);
+        let result = await api.login.getCaptcha(vdatas.login.captcha_id);
         if(result.data){
             vdatas.captcha_pic = result.data.captcha_pic
-            vdatas.captcha_id = result.data.captcha_id
+            vdatas.login.captcha_id = result.data.captcha_id
         }
     }
 }
