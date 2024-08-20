@@ -6,6 +6,7 @@ export const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
         { path: "", redirect: "/login" },
+        { path: "/index.html", redirect: "/login" },
         { path: "/login", name: "login", component: () => import('@/views/login.vue') },
         { path: "/", name: "layout", component: () => import('@/views/layout.vue') },
         { path: "/:match(.*?)", name: "err404", component: () => import('@/views/err404.vue') }
