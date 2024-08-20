@@ -80,7 +80,7 @@ let vfuncs = {
         let result = await api.login.getCaptcha(vdatas.captcha_id);
         if(result.data){
             vdatas.captcha_pic = result.data.captcha_pic
-            vdatas.login.captcha_id = result.data.captcha_id
+            vdatas.captcha_id = result.data.captcha_id
         }
     }
 }
