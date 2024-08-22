@@ -4,7 +4,10 @@ import { router } from '@/router';
 import NProgress from "nprogress";
 
 let auth = useAuthStore();
-let API_URL = import.meta.env.VITE_API_URL?.replace(/\/+$/,'');
+let API_URL = "/api"
+if (typeof (import.meta.env['VITE_API_URL']) == "string" && import.meta.env.VITE_API_URL.length > 0) {
+    API_URL = import.meta.env.VITE_API_URL.replace(/\/+$/, '');
+}
 
 
 export const request = {
@@ -32,6 +35,10 @@ export const request = {
             let json = await response.json();
             if (!json.flag) {
                 util.msg.fail(json.msg)
+                if(typeof(json.code) == 'number' && json.code == 403){
+                    auth.quit();
+                    router.replace("/");
+                }
             }
             return json;
         } catch (err) {
