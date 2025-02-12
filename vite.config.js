@@ -24,8 +24,8 @@ export default defineConfig({
                     importStyle: false, // css in js
                 }),
                 (Component) => {
-                    if (Component == "Icon") {
-                        return { importName: Component, path: '@iconify/vue' }
+                    if (Component == "Iconify") {
+                        return { importName: Component.substring(0, 4), path: '@iconify/vue' }
                     }
                 }
             ],

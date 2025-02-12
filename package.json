@@ -3,25 +3,26 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host=0.0.0.0",
     "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
-    "ant-design-vue": "^4.1.0",
+    "@vueuse/core": "^11.3.0",
+    "ant-design-vue": "^4.2.6",
     "c-scrollbar": "^1.0.2",
     "nprogress": "^0.2.0",
-    "pinia": "^2.1.4",
-    "pinia-plugin-persistedstate": "^3.2.1",
-    "vue": "^3.3.4",
-    "vue-router": "^4.2.4"
+    "pinia": "^2.3.1",
+    "pinia-plugin-persistedstate": "^3.2.3",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0"
   },
   "devDependencies": {
-    "@iconify/vue": "^4.1.2",
-    "@vicons/fa": "^0.12.0",
-    "@vitejs/plugin-vue": "^4.2.3",
-    "unplugin-auto-import": "^0.17.3",
+    "@iconify/vue": "^4.3.0",
+    "@vitejs/plugin-vue": "^4.6.2",
+    "dayjs": "^1.11.13",
+    "unplugin-auto-import": "^0.17.8",
     "unplugin-vue-components": "^0.26.0",
-    "vite": "^4.4.6"
+    "vite": "^4.5.9"
   }
 }

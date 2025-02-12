@@ -92,6 +92,7 @@ body{padding: 0;margin: 0;width: 100vw;height: 100vh;overflow: hidden;}
 @media only screen and (max-width:767px) {
     .login-wrap .login {
         width: 100vw;
+        min-width: 100vw;
     }
 
     .login-wrap .login-form {

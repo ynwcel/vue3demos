@@ -3,7 +3,7 @@
     <a-layout-header class="layout-header">
         <a-flex justify="space-between" align="center">
             <a-button type="text"  v-show="!vdatas.desktopIsPc" @click="vdatas.siderCollsped=!vdatas.siderCollsped" >
-                <Icon icon="carbon:menu" class="icon-14" />
+                <Iconify icon="carbon:menu" class="icon-14" />
             </a-button>
             <div class="layout-header-logo">
                 <img src="@/assets/logo.png" height="48px"/>
@@ -21,7 +21,7 @@
                                         </a-avatar>
                                         <span>
                                             {{vdatas.realname}}
-                                            <Icon icon="mingcute:down-fill" />
+                                            <Iconify icon="mingcute:down-fill" />
                                         </span>
                                 </a-space>
                             </a>
@@ -29,13 +29,13 @@
                                 <a-menu>
                                     <a-menu-item key="1" @click="vdatas.drawer_show=true;">
                                         <a-space>
-                                            <Icon icon="uil:setting" />
+                                            <Iconify icon="uil:setting" />
                                             修改密码
                                         </a-space>
                                     </a-menu-item>
                                     <a-menu-item key="2" @click="vfuncs.logout">
                                         <a-space>
-                                            <Icon icon="ci:exit" />
+                                            <Iconify icon="ci:exit" />
                                             退出登录
                                         </a-space>
                                     </a-menu-item>
@@ -47,7 +47,7 @@
                 <template v-else>
                     <a-dropdown arrow>
                         <a-button type="text">
-                            <Icon icon="ri:more-fill"/>
+                            <Iconify icon="ri:more-fill"/>
                         </a-button>
                         <template #overlay>
                             <a-menu>
@@ -61,13 +61,13 @@
                                     </template>
                                     <a-menu-item key="1" @click="vdatas.drawer_show=true;">
                                         <a-space>
-                                            <Icon icon="uil:setting" />
+                                            <Iconify icon="uil:setting" />
                                             修改密码
                                         </a-space>
                                     </a-menu-item>
                                     <a-menu-item key="2" @click="vfuncs.logout">
                                         <a-space>
-                                            <Icon icon="ci:exit" />
+                                            <Iconify icon="ci:exit" />
                                             退出登录
                                         </a-space>
                                     </a-menu-item>
@@ -96,7 +96,7 @@
                             <template #default>
                                 <a-input ref="sider_search_menu_input" placeholder="菜单过滤" :style="{'padding-left': '0.5rem' }">
                                     <template #prefix>
-                                        <Icon icon="ant-design:search-outlined"/>
+                                        <Iconify icon="ant-design:search-outlined"/>
                                     </template>
                                 </a-input>
                             </template>
@@ -109,7 +109,7 @@
                     <a-menu mode="inline"  v-model:selectedKeys="vdatas.menuInitSelected" v-model:openKeys="vdatas.menuInitOpened">
                         <a-sub-menu v-for="(menu,idx) of vdatas.menus" v-bind:key="menu.key" :title="menu.title">
                             <template #icon>
-                                <Icon icon="ion:list" class="icon-15" />
+                                <Iconify icon="ion:list" class="icon-15" />
                             </template>
                             <a-menu-item v-for="(submenu,subidx) of menu.children" v-bind:key="submenu.key" :title="submenu.title" @click="vfuncs.siderMemuChange(submenu)">
                                 {{submenu.title}}
@@ -125,7 +125,7 @@
             <a-card  class="layout-body-main-header">
                 <a-breadcrumb>
                     <a-breadcrumb-item>
-                        <Icon icon="gis:position" />
+                        <Iconify icon="gis:position" />
                         {{vdatas.breadcrumbs[0]}}
                     </a-breadcrumb-item>
                     <a-breadcrumb-item><b>{{vdatas.breadcrumbs[1]}}</b></a-breadcrumb-item>

@@ -10,20 +10,20 @@
                 <a-form :model="vdatas.login" name="basic" @finish="vfuncs.loginSubmit">
                     <a-form-item name="username"  :rules="[{ required: true,message:''}]">
                         <a-input v-model:value="vdatas.login.username" placeholder="用户名" size="large">
-                            <template #prefix><Icon icon="fa-solid:user" /></template>
+                            <template #prefix><Iconify icon="fa-solid:user" /></template>
                         </a-input>
                     </a-form-item>
 
                     <a-form-item name="password" :rules="[{ required: true,message:''}]">
                         <a-input-password v-model:value="vdatas.login.password" placeholder="密码" size="large">
-                            <template #prefix><Icon icon="teenyicons:password-solid" /></template>
+                            <template #prefix><Iconify icon="teenyicons:password-solid" /></template>
                         </a-input-password>
                     </a-form-item>
 
                     
                     <a-form-item name="captcha_val" :rules="[{ required: true,message:''}]" class="login-form-captcha">
                         <a-input v-model:value="vdatas.login.captcha_val" placeholder="验证码" size="large">
-                            <template #prefix><Icon icon="icon-park-solid:check-one" /></template>
+                            <template #prefix><Iconify icon="icon-park-solid:check-one" /></template>
                             <template #addonAfter>
                                 <img :src="vdatas.captcha_pic" style="height:35px" @click="vfuncs.refresh" />
                             </template>
@@ -63,7 +63,7 @@ let vfuncs = {
     loginSubmit:async(values) => {
         vdatas.spinning = true;
         let params = Object.assign(vdatas.login,values);
-        let result = await api.login.post(params);
+        let result = await api.admin.postLogin(params);
         if(result.flag){
             auth.apply(result.data);
             let routers = auth.getRouters();
@@ -77,7 +77,7 @@ let vfuncs = {
         vdatas.spinning = false;
     },
     refresh:async()=>{
-        let result = await api.login.getCaptcha(vdatas.login.captcha_id);
+        let result = await api.admin.getCaptcha(vdatas.login.captcha_id);
         if(result.data){
             vdatas.captcha_pic = result.data.captcha_pic
             vdatas.login.captcha_id = result.data.captcha_id
