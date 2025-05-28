@@ -1,5 +1,3 @@
-import { useAuthStore } from '@/stores';
-import { router } from '@/router';
 import NProgress from "nprogress";
 
 let auth = useAuthStore();

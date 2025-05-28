@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { useAuthStore } from '@/stores'
 import NProgress from "nprogress";
 
 export const router = createRouter({
