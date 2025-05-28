@@ -1,6 +1,5 @@
 import NProgress from "nprogress";
 
-let auth = useAuthStore();
 let API_URL = "/api"
 if (typeof (import.meta.env['VITE_API_URL']) == "string" && import.meta.env.VITE_API_URL.length > 0) {
     API_URL = import.meta.env.VITE_API_URL.replace(/\/+$/, '');
@@ -17,7 +16,6 @@ export const request = {
         NProgress.start();
         let options = {
             "method":method,
-            "AuthToken":auth.data.authtoken,
         }
         if (typeof (params) != 'undefined' && params){
             if(`${method}`.toLowerCase() == 'get'){
