@@ -2,7 +2,6 @@ import { util } from './util';
 import { useAuthStore } from '@/stores';
 import { router } from '@/router';
 import NProgress from "nprogress";
-import { useFetch } from '@vueuse/core';
 
 let auth = useAuthStore();
 let API_URL = "/api"
@@ -17,19 +16,11 @@ export const request = {
         }
         return url;
     },
-    fetch:async(url,options={})=>{
-        NProgress.start();
-        if (typeof (options) != 'object') {
-            options = {}
-        }
-        options.headers['Auth-Token'] = auth.data.authtoken;
-        let result = await useFetch(request.format(url), options);
-        NProgress.done();
-        return result;
-    },
     send:async (method,url,params,is_json=true)=>{
+        NProgress.start();
         let options = {
             "method":method,
+            "AuthToken":auth.data.authtoken,
         }
         if (typeof (params) != 'undefined' && params){
             if(`${method}`.toLowerCase() == 'get'){
@@ -43,6 +34,14 @@ export const request = {
                 options.body = is_json ? JSON.stringify(params) : params;
             }
         }
+        try{
+            let response = await fetch(request.format(url), options);
+            return {"code":response.status,"response":response};
+        }catch($err){
+            return {"code":500,"response":new Response()};
+        }finally{
+            NProgress.done();
+        }
     },
     get: async (url, values, is_json=true) => {
         let params = new URLSearchParams(values).toString();
@@ -52,18 +51,10 @@ export const request = {
         return await request.send('post', url, values, is_json);
     },
     put: async (url, values, is_json=true) => {
-        let result = await request.send('put', url, values, is_json);
-        if (result.flag) {
-            util.msg.ok('操作成功');
-        }
-        return result;
+        return  await request.send('put', url, values, is_json);
     },
     delete: async (url, values, is_json=true) => {
-        let result = await request.send('delete', url, values, is_json);
-        if (result.flag) {
-            util.msg.ok('操作成功');
-        }
-        return result;
+        return  await request.send('delete', url, values, is_json);
     },
     upload: async function (url, datas) {
         let options = {
