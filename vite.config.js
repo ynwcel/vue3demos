@@ -20,9 +20,6 @@ export default defineConfig({
         Components({
             dirs: ['src/vcpns'],
             resolvers: [
-                AntDesignVueResolver({
-                    importStyle: false, // css in js
-                }),
                 (Component) => {
                     if (Component == "Iconify") {
                         return { importName: Component.substring(0, 4), path: '@iconify/vue' }
