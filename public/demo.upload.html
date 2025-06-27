@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head></head>
+<body>
+
+<form id="demofrom" method="post" action="#">
+<input type="text" id="demotext" name="demotext" /><br />
+<input type="file" id="demofile" name="demofile">
+<button type="button" id="upload" onclick="fn_upload1()">upload1</button>
+<button type="button" id="upload" onclick="fn_upload2()">upload2</button>
+</form>
+
+
+<script type="text/javascript">
+async function fn_upload1(){
+    let el_form = document.querySelector("#demofrom");
+    let form_data = new FormData(el_form);
+    console.log(form_data);
+    let response = await fetch('/upload',{
+        method:'post',
+        body:form_data,
+        'Content-Type':'multipart/form-data'
+    })
+    console.log(response.ok)
+    console.log(response.status);
+
+}
+async function fn_upload2(){
+    let form_data = new FormData();
+    let txt_val = document.querySelector("#demotext").value;
+    let file_info = document.querySelector("#demofile").files[0];
+    console.log(txt_val,file_info);
+    form_data.append("demotext",txt_val);
+    form_data.append("demofile",file_info,file_info.name);
+    let response = await fetch('/upload',{
+        method:'post',
+        body:form_data,
+        'Content-Type':'multipart/form-data'
+    })
+    console.log(response.ok)
+    console.log(response.status);
+
+}
+</script>
+</body>

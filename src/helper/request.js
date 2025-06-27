@@ -12,11 +12,12 @@ export const request = {
         }
         return url;
     },
-    send:async (method,url,params,is_json=true)=>{
+    send:async (method,url,params,is_json=true,options={})=>{
         NProgress.start();
-        let options = {
-            "method":method,
+        if(typeof(options)!='object'){
+            options = {};
         }
+        options.method = method;
         if (typeof (params) != 'undefined' && params){
             if(`${method}`.toLowerCase() == 'get'){
                 let query = new URLSearchParams(params).toString();
@@ -51,9 +52,17 @@ export const request = {
     delete: async (url, values, is_json=true) => {
         return  await request.send('delete', url, values, is_json);
     },
-    upload: async function (url, datas) {
+    upload: async function (url,file_field,file, values={}) {
+        let form = new FormData();
+        form.append(file_field,file,file.name);
+        if(typeof(values)=='object'){
+            values.keys().forEach(v=>{
+                form.append(v,values[v]);
+            })
+        }
         let options = {
-            body: datas,
+            body:form,
+            'Content-Type':'multipart/form-data',
         }
         return await request.send('post',url, {},false,options);
     },
