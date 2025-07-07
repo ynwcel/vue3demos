@@ -8,16 +8,16 @@ import (
 
 func main() {
 	var (
-		svcmux = http.NewServeMux()
+		svrmux = http.NewServeMux()
 
 		svr = http.Server{
-			Addr: fmt.Sprintf(":8081"),
+			Addr: ":8081",
 		}
 	)
-	svcmux.HandleFunc("/", index)
-	svcmux.HandleFunc("/upload", upload)
+	svrmux.HandleFunc("/", index)
+	svrmux.HandleFunc("/upload", upload)
 
-	svr.Handler = svcmux
+	svr.Handler = svrmux
 	if err := svr.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 		panic(err)
 	}
