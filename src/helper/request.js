@@ -56,7 +56,7 @@ export const request = {
         let form = new FormData();
         form.append(file_field,file,file.name);
         if(typeof(values)=='object'){
-            values.keys().forEach(v=>{
+            Object.keys(values).forEach(v=>{
                 form.append(v,values[v]);
             })
         }
