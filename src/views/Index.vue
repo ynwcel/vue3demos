@@ -1,9 +1,11 @@
 <template>
-    <h1 class="text-3xl font-bold underline text-yellow-500">Hello World</h1>
+    <h1>Hello World</h1>
+    <hr />
+    <p>font-size:1.4rem</p>
+    <p class="f16rem">font-size:1.6rem</p>
+    <p class="f18rem">font-size:1.8rem</p>
+    <p class="f20rem">font-size:2.0rem</p>
 </template>
 
 <script setup>
-import {router} from '@/router'
-import { request } from '@/helper'
-import * as stores from '@/stores'
 </script>
