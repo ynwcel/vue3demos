@@ -6,18 +6,19 @@ if (typeof (import.meta.env['VITE_API_URL']) == "string" && import.meta.env.VITE
 }
 
 export const request = {
-    format: (url) => {
-        if (url.indexOf(API_URL) != 0) {
-            url = API_URL + "/" + url.replace(/^\/+/, '')
-        }
-        return url;
-    },
-    send:async (method,url,params,is_json=true,options={})=>{
-        NProgress.start();
+    format:(method,url,params,is_json=false,options={})=>{
         if(typeof(options)!='object'){
             options = {};
         }
-        options.method = method;
+        if (url.indexOf(API_URL) != 0) {
+            url = API_URL + "/" + url.replace(/^\/+/, '')
+        }
+        let fopts = {
+            'method': method,
+            'headers': {
+                'AuthToken': "",
+            },
+        }
         if (typeof (params) != 'undefined' && params){
             if(`${method}`.toLowerCase() == 'get'){
                 let query = new URLSearchParams(params).toString();
@@ -27,14 +28,24 @@ export const request = {
                     url = url+"&"+query;
                 }
             }else{
-                options.body = is_json ? JSON.stringify(params) : params;
+                fopts.body = is_json ? JSON.stringify(params) : params;
             }
         }
+
+        if (is_json) {
+            fopts.headers['Content-Type'] = 'application/json;charset=utf-8';
+        }
+        fopts = Object.assign(fopts, options);
+        return [url,fopts];
+    },
+    send:async (method,url,params,is_json=true,options={})=>{
+        NProgress.start();
+        let [fmt_url,fmt_option] = request.format(method,url,params,is_json,options);
         try{
-            let response = await fetch(request.format(url), options);
+            let response = await fetch(fmt_url, fmt_option);
             return {"code":response.status,"response":response};
         }catch($err){
-            return {"code":500,"response":new Response()};
+            return {"code":500,"response":new Response(),"err":$err};
         }finally{
             NProgress.done();
         }
@@ -65,5 +76,35 @@ export const request = {
             'Content-Type':'multipart/form-data',
         }
         return await request.send('post',url, {},false,options);
+    },
+    download:async(method,url,params, is_json=true,options={},save_file="")=>{
+        NProgress.start();
+        let [fmt_url,fmt_option] = request.format(method,url,params,is_json,options);
+        try {
+            let response = await request.fetch(fmt_url,fmt_option)
+            let content_dispostion_filename = "";
+            if(response.headers.get('Content-Disposition')){
+                const content_dispostion = response.headers.get('Content-Disposition');
+                if(`${content_dispostion}`.indexOf('filename=')>0){
+                    content_dispostion_filename = decodeURIComponent(`${content_dispostion}`.split('filename=')[1])
+                }else if (`${content_dispostion}`.indexOf(`filename*=utf-8''`)>0){
+                    content_dispostion_filename = decodeURIComponent(`${content_dispostion}`.split(`filename*=utf-8''`)[1])
+                }
+            }
+            save_file = content_dispostion_filename ? content_dispostion_filename : save_file;
+            if(!save_file){
+                throw new Error('获取导出文件名出错');
+            }
+            let data = await response.blob();
+            let blobUrl = window.URL.createObjectURL(data);
+            const alink = document.createElement("a");
+            alink.href = blobUrl;
+            alink.download = save_file;
+            alink.click();
+        } catch ($err) {
+            return {"code":500,"response":new Response(),"err":$err};
+        }finally{
+            NProgress.done();
+        }
     },
 }
