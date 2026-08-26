@@ -9,12 +9,17 @@
         <p>util.ffixwidth() = {{ util.ffixwidth() }}</p>
         <hr />
         <button @click="sendMsg" style="padding:.6rem">use-eventbus-send-msg</button>
+        <hr />
+        <button class="btn" @click="send_api('get',$event)">get-api</button>
+        <button class="btn" @click="send_api('post',$event)">post-api</button>
+        <button class="btn" @click="send_api('put',$event)">put-api</button>
+        <button class="btn" @click="send_api('delete',$event)">delete-api</button>
     </div>
 </template>
 
 <script setup>
 import { useAppBaseEventBus } from '@/helper';
-import { util } from '@/helper';
+import { util,request } from '@/helper';
 
 console.log(util);
 const sendMsg = (e)=>{
@@ -27,5 +32,26 @@ const sendMsg = (e)=>{
         }
     })
 }
+const send_api = async (method,event)=>{
+    let result = null;
+    let url = `/${method}/api`
+    if(method == 'get'){
+        result = await request.get(url,{})
+    }else if(method == 'post'){
+        result = await request.post(url,{})
+    }else if(method == 'put'){
+        result = await request.put(url,{})
+    }else if(method == 'delete'){
+        result = await request.delete(url,{})
+    }
+    console.log(method,result,event);
+}
 
 </script>
+<style scope>
+.btn{
+    padding:1rem 1.8rem;
+    border-radius:0.5rem;
+    margin-right:1rem;
+}
+</style>
